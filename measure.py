@@ -4,6 +4,8 @@ import argparse
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import TimeoutException
+
 
 from util import URLS, EXTENSIONS  # For testing purpose
 
@@ -26,7 +28,9 @@ def get_driver(extension):
     path = "extensions/{}.crx".format(extension)
     options.add_extension(path)
     options.add_argument("--enable-precise-memory-info")
-    return webdriver.Chrome(options=options)
+    result = webdriver.Chrome(options=options)
+    result.set_page_load_timeout(10)
+    return result
 
 
 def expand_shadow_element(driver, element):
@@ -90,7 +94,10 @@ def with_blockers():
                 toggle_developer_mode(driver)
                 ext_id = get_extension_id(driver)
                 start = time.time()
-                driver.get(url)
+                try:
+                    driver.get(url)
+                except TimeoutException:
+                    driver.execute_script("window.stop();")
                 end = time.time()
                 time.sleep(5)
                 avg_memory_used += get_memory_usage(driver)

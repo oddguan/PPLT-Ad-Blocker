@@ -1,0 +1,15 @@
+are they sending our personal information to the company behind
+where are the information being stored
+does it affect the performance of the browsing experience
+   > what websites will be broken after using the blocker
+      > find a list of websites to test on
+   > performance metric:
+      1. loading speed
+      2. ads blocking amount	
+      3. ... 
+
+** security, privacy and performance of ad-blockers **
+> maybe narrow it down to privacy and performance?
+
+eventually:
+rank all ad-blockers that looked at

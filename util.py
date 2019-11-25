@@ -40,19 +40,23 @@ def get_privacybadger_numblocked(driver, ext_id):
     while len(splitted) < 3:
         driver.refresh()
         time.sleep(2)
+        if driver.find_element_by_id("instructions_one_tracker").text:
+            return 1
+        if driver.find_element_by_id("instructions_no_trackers").text:
+            return 0
         total = driver.find_element_by_id("instructions-many-trackers").text
         splitted = total.split(" ")
     return int(splitted[3])
 
 
-f = open("urls/portal.txt")
+f = open("urls/test.txt")
 URLS = f.readlines()
 f.close()
 URLS = [i.strip() for i in URLS]
 EXTENSIONS = {
-    "Adguard": get_adguard_numblocked,
+    # "Adguard": get_adguard_numblocked,
     "AdBlockPlus": get_abp_numblocked,
-    "Ghostery": get_ghostery_numblocked,
-    "PrivacyBadger": get_privacybadger_numblocked,
-    "uBlockOrigin": get_ubp_numblocked
+    # "Ghostery": get_ghostery_numblocked,
+    # "PrivacyBadger": get_privacybadger_numblocked,
+    # "uBlockOrigin": get_ubp_numblocked
 }

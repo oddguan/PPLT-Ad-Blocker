@@ -77,7 +77,7 @@ def close_popup(driver):
     driver.switch_to.window(curr)
 
 
-def with_blockers():
+def with_blockers(name):
     result = []
     for extension in EXTENSIONS:
         for url in URLS:
@@ -111,11 +111,14 @@ def with_blockers():
             line.append(avg_memory_used)
             line.append(avg_num_blocked)
             line.append(avg_load_time)
-            result.append(line)
+            # result.append(line)
+            f = open(name, "a")
+            f.write(",".join([str(i) for i in line]) + "\n")
+            f.close()
     return result
 
 
-def without_blockers():
+def without_blockers(name):
     result = []
     for url in URLS:
         line = [url]
@@ -124,7 +127,10 @@ def without_blockers():
         for _ in range(LOADS):
             driver = webdriver.Chrome()
             start = time.time()
-            driver.get(url)
+            try:
+                driver.get(url)
+            except TimeoutException:
+                driver.execute_script("window.stop();")
             end = time.time()
             time.sleep(5)
             avg_memory_used += get_memory_usage(driver)
@@ -134,7 +140,10 @@ def without_blockers():
         avg_load_time /= LOADS
         line.append(avg_memory_used)
         line.append(avg_load_time)
-        result.append(line)
+        # result.append(line)
+        f = open(name, "a")
+        f.write(",".join([str(i) for i in line]) + "\n")
+        f.close()
     return result
 
 
@@ -150,16 +159,14 @@ def parse_argument():
 
 
 def main():
-    with open("blocked.csv", "w") as f:
-        blocked = with_blockers()
-        f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
-        for line in blocked:
-            f.write(",".join([str(i) for i in line]) + "\n")
-    with open("unblocked.csv", "w") as f:
-        unblocked = without_blockers()
-        f.write("extension,url,avg_memory_used,avg_load_time\n")
-        for line in unblocked:
-            f.write(",".join([str(i) for i in line]) + "\n")
+    # f = open("blocked.csv", "a")
+    # f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
+    # f.close()
+    with_blockers("blocked.csv")
+    # f = open("unblocked.csv", "a")
+    # f.write("extension,url,avg_memory_used,avg_load_time\n")
+    # f.close()
+    # without_blockers("unblocked.csv")
 
 
 if __name__ == "__main__":

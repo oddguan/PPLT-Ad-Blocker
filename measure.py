@@ -25,13 +25,16 @@ def get_driver(extension):
     Get a Chrome driver with a specific extension installed
     '''
     options = Options()
+    exts = os.listdir("extensions")
     path = "extensions/{}.crx".format(extension)
-    options.add_extension(path)
+    if path in exts:
+        options.add_extension(path)
+    else:
+        options.add_extension("extensions/{}.zip".format(extension))
     options.add_argument("--enable-precise-memory-info")
     result = webdriver.Chrome(options=options)
     result.set_page_load_timeout(10)
     return result
-
 
 def expand_shadow_element(driver, element):
     shadow_root = driver.execute_script(
@@ -159,14 +162,14 @@ def parse_argument():
 
 
 def main():
-    # f = open("blocked.csv", "a")
-    # f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
-    # f.close()
-    with_blockers("blocked.csv")
-    # f = open("unblocked.csv", "a")
-    # f.write("extension,url,avg_memory_used,avg_load_time\n")
-    # f.close()
-    # without_blockers("unblocked.csv")
+    f = open("blocked.csv", "a")
+    f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
+    f.close()
+    with_blockers("blocked_streaming.csv")
+    f = open("unblocked.csv", "a")
+    f.write("extension,url,avg_memory_used,avg_load_time\n")
+    f.close()
+    without_blockers("unblocked_streaming.csv")
 
 
 if __name__ == "__main__":

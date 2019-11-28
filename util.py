@@ -34,6 +34,14 @@ def get_ubp_numblocked(driver, ext_id):
     return result
 
 
+def get_abu_numblocked(driver, ext_id):
+    driver.get("chrome-extension://{}/pages/popup.html".format(ext_id))
+    time.sleep(2)
+    blocked = driver.find_element_by_css_selector("#stats-total > strong").text
+    result = int(blocked)
+    return result
+
+
 def get_privacybadger_numblocked(driver, ext_id):
     driver.get("chrome-extension://{}/skin/popup.html".format(ext_id))
     splitted = [""]
@@ -49,14 +57,63 @@ def get_privacybadger_numblocked(driver, ext_id):
     return int(splitted[3])
 
 
-f = open("urls/test.txt")
+def get_tb_numblocked(driver, ext_id):
+    driver.get("chrome-extension://{}/popup.html".format(ext_id))
+    time.sleep(2)
+    driver.find_element_by_class_name("arrow").click()
+    time.sleep(3)
+    nums = ["privacy", "ads", "social"]
+    result = 0
+    for num in nums:
+        time.sleep(1)
+        try:
+            result += int(driver.find_element_by_id(num).text)
+        except:
+            pass
+    return result
+
+
+def get_adlock_numblocked(driver, ext_id):
+    driver.get("chrome-extension://{}/popup.html".format(ext_id))
+    time.sleep(2)
+    result = int(driver.find_element_by_id("globally-blocked").text)
+    return result
+
+
+def get_vab_numblocked(driver, ext_id):
+    driver.get("chrome-extension:{}/views/popup/popup.html".format(ext_id))
+    time.sleep(2)
+    result = int(driver.find_element_by_id(
+        "unlimited-blocked-today-amount").text)
+    print(result)
+    return result
+
+
+def get_akap_numblocked(driver, ext_id):
+    driver.get("chrome-extension:{}/popup.html".format(ext_id))
+    time.sleep(2)
+    try:
+        num_blocked = int(driver.find_element_by_id(
+            "total-blocked").text.split(" or ")[0])
+    except:
+        num_blocked = 0
+    print(num_blocked)
+    return num_blocked
+
+
+f = open("urls/portal.txt")
 URLS = f.readlines()
 f.close()
 URLS = [i.strip() for i in URLS]
 EXTENSIONS = {
-    # "Adguard": get_adguard_numblocked,
+    "Adguard": get_adguard_numblocked,
     "AdBlockPlus": get_abp_numblocked,
-    # "Ghostery": get_ghostery_numblocked,
-    # "PrivacyBadger": get_privacybadger_numblocked,
-    # "uBlockOrigin": get_ubp_numblocked
+    "Ghostery": get_ghostery_numblocked,
+    "PrivacyBadger": get_privacybadger_numblocked,
+    "uBlockOrigin": get_ubp_numblocked,
+    "AdblockerUltimate": get_abu_numblocked,
+    "TunnelBear": get_tb_numblocked,
+    "Adlock": get_adlock_numblocked,
+    "VadBlocker":get_vab_numblocked,
+    "AKAP": get_akap_numblocked
 }

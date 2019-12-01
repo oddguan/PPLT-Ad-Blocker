@@ -1,4 +1,4 @@
-extension,url,avg_memory_used,avg_load_time
+url,avg_memory_used,avg_load_time
 https://www.amazon.com/,2.6818660736083983,0.5330785989761353
 https://www.ebay.com/,17.72436304092407,1.289299201965332
 https://www.wish.com/,73.30430459976196,5.058382368087768

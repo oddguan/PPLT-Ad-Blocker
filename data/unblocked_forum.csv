@@ -1,4 +1,4 @@
-extension,url,avg_memory_used,avg_load_time
+url,avg_memory_used,avg_load_time
 https://www.reddit.com/,63.948387718200685,4.013752722740174
 http://www.4chan.org/,2.5828171730041505,0.7817140579223633
 https://stackoverflow.com/,5.442484664916992,1.40354483127594

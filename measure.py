@@ -10,7 +10,7 @@ from selenium.common.exceptions import TimeoutException
 from util import URLS, EXTENSIONS  # For testing purpose
 
 # the number of loads to perform for a single website
-LOADS = 1
+LOADS = 10
 
 
 def read_file(path):
@@ -162,14 +162,13 @@ def parse_argument():
 
 
 def main():
-    f = open("blocked_forum.csv", "a")
-    f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
-    f.close()
-    with_blockers("blocked_news.csv")
-    with_blockers("blocked_portal.csv")
-    f = open("unblocked_news.csv", "a")
-    f.write("extension,url,avg_memory_used,avg_load_time\n")
-    f.close()
+    # f = open("blocked_forum.csv", "a")
+    # f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
+    # f.close()
+    # with_blockers("blocked_news.csv")
+    # f = open("unblocked_news.csv", "a")
+    # f.write("url,avg_memory_used,avg_load_time\n")
+    # f.close()
     without_blockers("unblocked_news.csv")
 
 

@@ -74,7 +74,12 @@ def get_tb_numblocked(driver, ext_id):
 
 
 def get_adlock_numblocked(driver, ext_id):
-    driver.get("chrome-extension://{}/popup.html".format(ext_id))
+    while True:
+        try:
+            driver.get("chrome-extension://{}/popup.html".format(ext_id))
+            break
+        except:
+            pass
     time.sleep(2)
     result = int(driver.find_element_by_id("globally-blocked").text)
     return result
@@ -85,7 +90,6 @@ def get_vab_numblocked(driver, ext_id):
     time.sleep(2)
     result = int(driver.find_element_by_id(
         "unlimited-blocked-today-amount").text)
-    print(result)
     return result
 
 
@@ -97,11 +101,10 @@ def get_akap_numblocked(driver, ext_id):
             "total-blocked").text.split(" or ")[0])
     except:
         num_blocked = 0
-    print(num_blocked)
     return num_blocked
 
 
-f = open("urls/portal.txt")
+f = open("urls/news.txt")
 URLS = f.readlines()
 f.close()
 URLS = [i.strip() for i in URLS]

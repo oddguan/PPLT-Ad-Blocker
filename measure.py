@@ -10,7 +10,7 @@ from selenium.common.exceptions import TimeoutException
 from util import URLS, EXTENSIONS  # For testing purpose
 
 # the number of loads to perform for a single website
-LOADS = 10
+LOADS = 1
 
 
 def read_file(path):
@@ -26,9 +26,9 @@ def get_driver(extension):
     '''
     options = Options()
     exts = os.listdir("extensions")
-    path = "extensions/{}.crx".format(extension)
+    path = "{}.crx".format(extension)
     if path in exts:
-        options.add_extension(path)
+        options.add_extension("extensions/{}".format(path))
     else:
         options.add_extension("extensions/{}.zip".format(extension))
     options.add_argument("--enable-precise-memory-info")
@@ -162,14 +162,15 @@ def parse_argument():
 
 
 def main():
-    f = open("blocked.csv", "a")
+    f = open("blocked_forum.csv", "a")
     f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
     f.close()
-    with_blockers("blocked_streaming.csv")
-    f = open("unblocked.csv", "a")
+    with_blockers("blocked_news.csv")
+    with_blockers("blocked_portal.csv")
+    f = open("unblocked_news.csv", "a")
     f.write("extension,url,avg_memory_used,avg_load_time\n")
     f.close()
-    without_blockers("unblocked_streaming.csv")
+    without_blockers("unblocked_news.csv")
 
 
 if __name__ == "__main__":

@@ -117,6 +117,6 @@ EXTENSIONS = {
     "AdblockerUltimate": get_abu_numblocked,
     "TunnelBear": get_tb_numblocked,
     "Adlock": get_adlock_numblocked,
-    "VadBlocker":get_vab_numblocked,
+    "VadBlocker": get_vab_numblocked,
     "AKAP": get_akap_numblocked
 }

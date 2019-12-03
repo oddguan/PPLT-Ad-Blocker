@@ -36,6 +36,7 @@ def get_driver(extension):
     result.set_page_load_timeout(10)
     return result
 
+
 def expand_shadow_element(driver, element):
     shadow_root = driver.execute_script(
         'return arguments[0].shadowRoot', element)
@@ -162,13 +163,13 @@ def parse_argument():
 
 
 def main():
-    # f = open("blocked_forum.csv", "a")
-    # f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
-    # f.close()
-    # with_blockers("blocked_news.csv")
-    # f = open("unblocked_news.csv", "a")
-    # f.write("url,avg_memory_used,avg_load_time\n")
-    # f.close()
+    f = open("blocked_forum.csv", "a")
+    f.write("extension,url,avg_memory_used,avg_num_blocked,avg_load_time\n")
+    f.close()
+    with_blockers("blocked_news.csv")
+    f = open("unblocked_news.csv", "a")
+    f.write("url,avg_memory_used,avg_load_time\n")
+    f.close()
     without_blockers("unblocked_news.csv")
 
 

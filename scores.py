@@ -43,6 +43,7 @@ adl_blocked = blocked_trackers[140:160]
 vb_blocked = blocked_trackers[160:180]
 aka_blocked = blocked_trackers[180:200]
 
+
 def time_scores(base_time, real_time):
     res = 0
     for i in range(len(base_time)):
@@ -59,8 +60,10 @@ def time_scores(base_time, real_time):
             res += 1
     return res / 20
 
+
 # modify the target blockers here
 print(time_scores(base_time, adg_time))
+
 
 def memo_scores(base_memo, real_memo):
     res = 0
@@ -78,8 +81,10 @@ def memo_scores(base_memo, real_memo):
             res += 1
     return res / 20
 
+
 # modify the target blockers here
 print(memo_scores(base_memo, adg_memo))
+
 
 def get_max(a, b, c, d, e, f, g, h, i, j):
     list = []
@@ -100,7 +105,8 @@ def get_max(a, b, c, d, e, f, g, h, i, j):
 def block_num_scores(l1, l2, l3, l4, l5, l6, l7, l8, l9, la):
     res = [0 for _ in range(10)]
     for i in range(len(l1)):
-        base_scores = get_max(l1[i], l2[i], l3[i], l4[i], l5[i], l6[i], l7[i], l8[i], l9[i], la[i])
+        base_scores = get_max(l1[i], l2[i], l3[i], l4[i],
+                              l5[i], l6[i], l7[i], l8[i], l9[i], la[i])
         if base_scores == 0:
             res[0] += 5
             res[1] += 5
@@ -126,6 +132,7 @@ def block_num_scores(l1, l2, l3, l4, l5, l6, l7, l8, l9, la):
     for i in range(10):
         res[i] = round(res[i]/20, 2)
     return res
+
 
 print(block_num_scores(adg_blocked, adp_blocked, gos_blocked, pb_blocked, ubo_blocked,
                        adu_blocked, tb_blocked, adl_blocked, vb_blocked, aka_blocked))
